@@ -149,6 +149,15 @@ func main() {
 	}
 
 	groupsAuthorizer := newGroupsAuthorizer(c.GroupsAllowlist)
+	 
+	accessTokenAuthenticator := &accessTokenAuthenticator{
+		header:			c.AuthHeader,
+		caBundle:		caBundle,
+		provider: 		provider,
+		clientID:   	c.ClientID,
+		idTypClaim:     c.IDTypClaim, 
+		azpClaim:       c.AzpClaim, 
+	}
 
 	// Set the server values.
 	// The isReady atomic variable should protect it from concurrency issues.
@@ -174,7 +183,7 @@ func main() {
 		strictSessionValidation: c.StrictSessionValidation,
 		authHeader:              c.AuthHeader,
 		caBundle:                caBundle,
-		authenticators:          []authenticator.Request{sessionAuthenticator, k8sAuthenticator},
+		authenticators:          []authenticator.Request{sessionAuthenticator, k8sAuthenticator,accessTokenAuthenticator},
 		authorizers:             []Authorizer{groupsAuthorizer},
 	}
 	switch c.SessionSameSite {

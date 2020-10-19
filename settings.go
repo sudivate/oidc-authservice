@@ -39,6 +39,10 @@ type config struct {
 	UserIDTokenHeader string `split_words:"true" envconfig:"USERID_TOKEN_HEADER"`
 	GroupsClaim       string `split_words:"true" default:"groups"`
 
+	//AccessToken Client Credentials
+	IDTypClaim         string `split_words:"true" default:"idtyp"`
+	AzpClaim           string `split_words:"true" default:"azp"`
+
 	// Infra
 	Hostname           string `split_words:"true" envconfig:"SERVER_HOSTNAME"`
 	Port               int    `split_words:"true" default:"8080" envconfig:"SERVER_PORT"`
